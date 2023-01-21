@@ -1,9 +1,13 @@
 const {gql} = require('apollo-server-express');
 
 const typeDefs = gql`
-type Comment {
+ type Category {
     _id: ID
-    thoughtText: String
+    name: String
+  } 
+ type Comment {
+    _id: ID
+    commentText: String
     createdAt: String
     username: String
     reactionCount: Int
@@ -24,7 +28,8 @@ type Comment {
     image: String
     quantity: Int
     price: Float
-    category: Category
+    category: [Category]
+    comments: [Comment]
   }
 
   type Order {
