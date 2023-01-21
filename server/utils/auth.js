@@ -1,3 +1,5 @@
+//<<<<<<< daven
+=======
 const jwt = require('jsonwebtoken');
 const jwtDecode = require('jwt-decode');
 
@@ -92,3 +94,5 @@ class AuthService {
 }
 
 export default new AuthService();
+
+//>>>>>>> develop
