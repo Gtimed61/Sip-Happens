@@ -7,39 +7,55 @@ import { Typography } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useDispatch, useSelector } from "react-redux";
 import { setItems } from "../../state";
+import { useLazyQuery } from '@apollo/client';
+import { assertValidExecutionArguments } from "graphql/execution/execute";
+import gql from "graphql-tag";
+
+
+
+// const client = ...
+const GET_HOT = gql`
+query Hots {
+  allHots {
+   title
+   image
+ } 
+}
+`;
+const GET_ICEDS = gql`
+query Iceds {
+  allIceds {
+   title
+   image
+ } 
+} 
+`;
+
+
 
 const ShoppingList = () => {
-  const dispatch = useDispatch();
-  const [value, setValue] = useState("all");
-  const items = useSelector((state) => state.cart.items);
+  const [getIced, { loading: loadingIce, data: dataIce } ] = useLazyQuery(
+    GET_ICEDS
+  );
   const breakPoint = useMediaQuery("(min-width:600px)");
+  const [getHots, { loading, data } ] = useLazyQuery(
+    GET_HOT 
+  );
+  
+  
+ 
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
-  async function getItems() {
-    const items = await fetch(
-      "http://localhost:2000/api/items?populate=image",
-      { method: "GET" }
-    );
-    const itemsJson = await items.json();
-    dispatch(setItems(itemsJson.data));
+
+ 
+
+  if (data) {
+    console.log(data);
+  }
+  if (dataIce) {
+    console.log(dataIce);
   }
 
-  useEffect(() => {
-    getItems();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const topRatedItems = items.filter(
-    (item) => item.attributes.category === "topRated"
-  );
-  const newArrivalsItems = items.filter(
-    (item) => item.attributes.category === "newArrivals"
-  );
-  const bestSellersItems = items.filter(
-    (item) => item.attributes.category === "bestSellers"
-  );
 
   return (
     <Box width="80%" margin="80px auto">
@@ -49,8 +65,6 @@ const ShoppingList = () => {
       <Tabs
         textColor="primary"
         indicatorColor="primary"
-        value={value}
-        onChange={handleChange}
         centered
         TabIndicatorProps={{ sx: { display: breakPoint ? "block" : "none" } }}
         sx={{
@@ -60,35 +74,18 @@ const ShoppingList = () => {
           },
         }}
       >
-        <Tab label="LATTE" value="all" />
-        <Tab label="MOCHA" value="newArrivals" />
-        <Tab label="ESPRESSO" value="bestSellers" />
-        <Tab label="CAPPUCINO" value="topRated" />
-      </Tabs>
+        <Tab onClick={()=> getHots() } label="HOT" />
+        <Tab onClick={()=> getIced() } label="ICED" />      
+        </Tabs>
       <Box
         margin="0 auto"
         display="grid"
         gridTemplateColumns="repeat(auto-fill, 300px)"
         justifyContent="space-around"
-        rowGap="20px"
+        rowGap="25px"
         columnGap="1.33%"
       >
-        {value === "latte" &&
-          items.map((item) => (
-            <Item item={item} key={`${item.name}-${item.id}`} />
-          ))}
-        {value === "mocha" &&
-          newArrivalsItems.map((item) => (
-            <Item item={item} key={`${item.name}-${item.id}`} />
-          ))}
-        {value === "espresso" &&
-          bestSellersItems.map((item) => (
-            <Item item={item} key={`${item.name}-${item.id}`} />
-          ))}
-        {value === "cappucino" &&
-          topRatedItems.map((item) => (
-            <Item item={item} key={`${item.name}-${item.id}`} />
-          ))}
+        
       </Box>
     </Box>
   );
