@@ -1,3 +1,4 @@
+const stripe = require('stripe')('sk_test_51MS9LnLPqkfbw31McDXZ7mjsVzdASliF9TPIw3ArHBHHbOUE6ZaAbBiLrnuU1uALKeNEVjaSu2tmhZjzDaMxq3aX00csRD77XI');
 const express = require('express');
 const path = require('path');
 const db = require('./config/connection');
@@ -13,6 +14,21 @@ app.use(express.json());
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
 }
+
+app.post('/create-checkout-session', async (req, res) => {
+  const session = await stripe.checkout.sessions.create({
+    line_items: [
+      {
+        price: 'price_1MS9xdLPqkfbw31MOKlmgmrU',
+        quantity: 1,
+      },
+    ],
+    mode: 'payment',
+    success_url: `${PORT}?success=true`,
+    cancel_url: `${PORT}?canceled=true`,
+  });
+  res.redirect(303, session.url);
+});
 
 app.use(routes);
 
