@@ -69,7 +69,7 @@ function generateImage(coffee, index) {
   return (
    
    <MDBCard>
-      <MDBCardImage src={coffee.image} position='top' style={{ width: "300px", height: "300px" }} />
+      <MDBCardImage src={coffee.image} position='top' style={{ width: "300px", height: "300px", border: "solid"}} />
       <MDBCardBody>
         <MDBCardTitle style={{fontSize: "25px", textAlign: "center"}}>{coffee.title}</MDBCardTitle>
         <MDBCardText>
