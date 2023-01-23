@@ -71,7 +71,7 @@ function generateImage(coffee, index) {
    <MDBCard>
       <MDBCardImage src={coffee.image} position='top' style={{ width: "300px", height: "300px" }} />
       <MDBCardBody>
-        <MDBCardTitle>{coffee.title}</MDBCardTitle>
+        <MDBCardTitle style={{fontSize: "25px", textAlign: "center"}}>{coffee.title}</MDBCardTitle>
         <MDBCardText>
           {coffee.description}
         </MDBCardText>
@@ -101,7 +101,7 @@ function generateImage(coffee, index) {
           },
         }}
       >
-        <Tab onClick={()=> getHots() } label="VIEW COFFEES" />   
+        <Tab onClick={()=> getHots() } label="VIEW OUR COFFEES" />   
       </Tabs>
       
   
