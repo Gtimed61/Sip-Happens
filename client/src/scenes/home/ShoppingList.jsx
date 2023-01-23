@@ -18,7 +18,7 @@ import {
   MDBCardImage,
   MDBBtn
 } from 'mdb-react-ui-kit';
-
+import {makeShoppingCartDiv} from '../global/CartMenu';
 
 
 // const client = ...
@@ -75,7 +75,7 @@ function generateImage(coffee, index) {
         <MDBCardText>
           {coffee.description}
         </MDBCardText>
-        <MDBBtn href='#'>$5.99 <br></br> Add To Cart</MDBBtn>
+        <MDBBtn onClick={() => makeShoppingCartDiv} href='#'>$5.99 <br></br> Add To Cart</MDBBtn>
         
         
       </MDBCardBody>

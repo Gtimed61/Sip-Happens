@@ -12,6 +12,39 @@ import {
   setIsCartOpen,
 } from "../../state";
 import { useNavigate } from "react-router-dom";
+import {
+  MDBCard,
+  MDBCardBody,
+  MDBCardTitle,
+  MDBCardText,
+  MDBCardImage,
+  MDBBtn
+} from 'mdb-react-ui-kit';
+import { useLazyQuery } from '@apollo/client';
+import gql from "graphql-tag";
+
+import ShoppingList from "../home/ShoppingList";
+
+
+export function makeShoppingCartDiv() {
+  return (
+      <MDBCard>
+    <MDBCardImage />
+    <MDBCardBody>
+      <MDBCardTitle>Title</MDBCardTitle>
+      <MDBCardText>
+       New Item
+      </MDBCardText>
+      
+      
+      
+    </MDBCardBody>
+    
+  </MDBCard>
+  )
+}
+
+
 
 const FlexBox = styled(Box)`
   display: flex;
@@ -60,62 +93,7 @@ const CartMenu = () => {
 
           {/* CART LIST */}
           <Box>
-            {cart.map((item) => (
-              <Box key={`${item.attributes.name}-${item.id}`}>
-                <FlexBox p="15px 0">
-                  <Box flex="1 1 40%">
-                    <img
-                      alt={item?.name}
-                      width="123px"
-                      height="164px"
-                      src={`http://localhost:2000${item?.attributes?.image?.data?.attributes?.formats?.medium?.url}`}
-                    />
-                  </Box>
-                  <Box flex="1 1 60%">
-                    <FlexBox mb="5px">
-                      <Typography fontWeight="bold">
-                        {item.attributes.name}
-                      </Typography>
-                      <IconButton
-                        onClick={() =>
-                          dispatch(removeFromCart({ id: item.id }))
-                        }
-                      >
-                        <CloseIcon />
-                      </IconButton>
-                    </FlexBox>
-                    <Typography>{item.attributes.shortDescription}</Typography>
-                    <FlexBox m="15px 0">
-                      <Box
-                        display="flex"
-                        alignItems="center"
-                        border={`1.5px solid ${shades.neutral[500]}`}
-                      >
-                        <IconButton
-                          onClick={() =>
-                            dispatch(decreaseCount({ id: item.id }))
-                          }
-                        >
-                          <RemoveIcon />
-                        </IconButton>
-                        <Typography>{item.count}</Typography>
-                        <IconButton
-                          onClick={() =>
-                            dispatch(increaseCount({ id: item.id }))
-                          }
-                        >
-                          <AddIcon />
-                        </IconButton>
-                      </Box>
-                      <Typography fontWeight="bold">
-                        ${item.attributes.price}
-                      </Typography>
-                    </FlexBox>
-                  </Box>
-                </FlexBox>
-                <Divider />
-              </Box>
-            ))}
+          { makeShoppingCartDiv () }
           </Box>
 
           {/* ACTIONS */}
