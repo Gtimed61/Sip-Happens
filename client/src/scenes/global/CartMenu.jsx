@@ -24,6 +24,7 @@ import { useLazyQuery } from "@apollo/client";
 import gql from "graphql-tag";
 import { useRef, useEffect } from "react";
 import ShoppingList, { shoppingCart } from "../home/ShoppingList";
+import { red } from "@mui/material/colors";
 
 export function makeShoppingCartDiv(cart) {
 
@@ -39,6 +40,12 @@ export function makeShoppingCartDiv(cart) {
         </MDBCardBody>
       </MDBCard>
   );
+}
+function clearCart(coffee) {
+  if (shoppingCart.has(coffee)) {
+    Map.shoppingCart.clear()
+  }
+  console.log(shoppingCart)
 }
 
 const FlexBox = styled(Box)`
@@ -111,6 +118,21 @@ const CartMenu = () => {
               }}
             >
               CHECKOUT
+            </Button>
+            <Button
+              sx={{
+                backgroundColor: shades.primary[400],
+                color: "white",
+                borderRadius: 0,
+                minWidth: "100%",
+                padding: "20px 40px",
+                m: "20px 0",
+              }}
+              onClick={() => {
+               clearCart (shoppingCart) ;
+              }}
+            >
+              CLEAR CART
             </Button>
           </Box>
         </Box>

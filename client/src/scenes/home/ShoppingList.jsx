@@ -91,6 +91,7 @@ const ShoppingList = () => {
         Our Featured <b>Products</b>
       </Typography>
       <Tabs
+        value={0}
         textColor="primary"
         indicatorColor="primary"
         centered
