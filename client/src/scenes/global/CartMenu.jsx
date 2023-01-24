@@ -18,33 +18,28 @@ import {
   MDBCardTitle,
   MDBCardText,
   MDBCardImage,
-  MDBBtn
-} from 'mdb-react-ui-kit';
-import { useLazyQuery } from '@apollo/client';
+  MDBBtn,
+} from "mdb-react-ui-kit";
+import { useLazyQuery } from "@apollo/client";
 import gql from "graphql-tag";
+import { useRef, useEffect } from "react";
+import ShoppingList, { shoppingCart } from "../home/ShoppingList";
 
-import ShoppingList from "../home/ShoppingList";
+export function makeShoppingCartDiv(cart) {
 
-
-export function makeShoppingCartDiv() {
+  const items = [];
+  for (let [coffee, quantity] of cart) {
+    items.push(<MDBCardTitle>{coffee} - {quantity}</MDBCardTitle>)
+  }
   return (
       <MDBCard>
-    <MDBCardImage />
-    <MDBCardBody>
-      <MDBCardTitle>Title</MDBCardTitle>
-      <MDBCardText>
-       New Item
-      </MDBCardText>
-      
-      
-      
-    </MDBCardBody>
-    
-  </MDBCard>
-  )
+        <MDBCardImage />
+        <MDBCardBody>
+          {items}
+        </MDBCardBody>
+      </MDBCard>
+  );
 }
-
-
 
 const FlexBox = styled(Box)`
   display: flex;
@@ -53,11 +48,12 @@ const FlexBox = styled(Box)`
 `;
 
 const CartMenu = () => {
+  const parentRef = useRef();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cart);
   const isCartOpen = useSelector((state) => state.cart.isCartOpen);
-
+  
   const totalPrice = cart.reduce((total, item) => {
     return total + item.count * item.attributes.price;
   }, 0);
@@ -82,7 +78,7 @@ const CartMenu = () => {
         height="100%"
         backgroundColor="white"
       >
-        <Box padding="30px" overflow="auto" height="100%">
+        <Box ref={parentRef} padding="30px" overflow="auto" height="100%">
           {/* HEADER */}
           <FlexBox mb="15px">
             <Typography variant="h3">SHOPPING BAG ({cart.length})</Typography>
@@ -92,9 +88,7 @@ const CartMenu = () => {
           </FlexBox>
 
           {/* CART LIST */}
-          <Box>
-          { makeShoppingCartDiv () }
-          </Box>
+          <Box id="1">{makeShoppingCartDiv(shoppingCart)}</Box>
 
           {/* ACTIONS */}
           <Box m="20px 0">
