@@ -17,6 +17,7 @@ class CheckoutForm extends React.Component {
             console.log(result.error.message);
         } else {
             console.log(result.token);
+            // callback to Backend Api goes here
         }
     };
 
