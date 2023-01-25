@@ -21,6 +21,7 @@ import {
 import { makeShoppingCartDiv } from "../global/CartMenu";
 
 export const shoppingCart = new Map();
+
 function addToCart(coffee) {
   if (shoppingCart.has(coffee)) {
     let value = shoppingCart.get(coffee);
