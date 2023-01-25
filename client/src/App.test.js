@@ -1,8 +1,26 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import React from "react";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import CheckoutForm from "./components/CheckoutForm"
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
-});
+const stripePromise = loadStripe('SK_TEST');
+
+const App = () => {
+  return (
+    <div className="App">
+      <div className="product">
+        <img
+          src="/assets/strapi-images/Caffè_Espresso_Macchiato_Schiumato.jpg"
+          alt="Espresso Coffee"
+        />
+        <div>
+          <Elements stripe={stripePromise}>
+            <CheckoutForm />
+          </Elements>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default App;

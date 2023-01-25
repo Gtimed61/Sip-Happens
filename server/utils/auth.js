@@ -1,5 +1,5 @@
 //<<<<<<< daven
-=======
+
 const jwt = require('jsonwebtoken');
 const jwtDecode = require('jwt-decode');
 

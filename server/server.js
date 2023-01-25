@@ -1,4 +1,4 @@
-const stripe = require('stripe')(SK_TEST);
+const stripe = require('stripe')('SK_TEST');
 const express = require('express');
 const path = require('path');
 const db = require('./config/connection');

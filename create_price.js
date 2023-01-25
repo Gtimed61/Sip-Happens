@@ -1,4 +1,4 @@
-const stripe = require('stripe')(SK_TEST);
+const stripe = require('stripe')('SK_TEST');
 
 stripe.products.create({
   name: 'Iced Coffee',
