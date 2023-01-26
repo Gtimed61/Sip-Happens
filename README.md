@@ -6,9 +6,9 @@ Sip Happens is a website created for coffee enthusiasts.  You can search for hot
 
 ## Installation
 
-Clone repo on your local drive.
+Clone repo on your local drive- git clone 
 
-Initialize your application with the npm init.
+Initialize your application- npm init.
 
 Download all dependencies-  npm install
 
