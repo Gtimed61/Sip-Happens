@@ -6,13 +6,13 @@ Sip Happens is a website created for coffee enthusiasts.  You can search for hot
 
 ## Installation
 
-Clone repo on your local drive- git clone 
+Clone repo on your local drive- git clone https://github.com/Gtimed61/Sip-Happens.git
 
 Initialize your application- npm init.
 
 Download all dependencies-  npm install
 
-Start yout server- npm run 
+Start yout server- npm run or npm run start
 
 ## Screenshot
 
