@@ -19,4 +19,8 @@ router.route('/me').get(authMiddleware, getSingleUser);
 
 router.route('/books/:bookId').delete(authMiddleware, deleteBook);
 
+app.use('/api/login', require('./routes/login'));
+app.use('/api/signup', require('./routes/signup'));
+
+
 module.exports = router;
