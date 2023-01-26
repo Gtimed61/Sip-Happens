@@ -22,30 +22,37 @@ import {
 } from "mdb-react-ui-kit";
 import { useLazyQuery } from "@apollo/client";
 import gql from "graphql-tag";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import ShoppingList, { shoppingCart } from "../home/ShoppingList";
 import { red } from "@mui/material/colors";
 
 export function makeShoppingCartDiv(cart) {
-
   const items = [];
   for (let [coffee, quantity] of cart) {
-    items.push(<MDBCardTitle>{coffee} - {quantity}</MDBCardTitle>)
+    items.push(
+      <MDBCardTitle>
+        {coffee} - {quantity}
+      </MDBCardTitle>
+    );
   }
   return (
-      <MDBCard>
-        <MDBCardImage />
-        <MDBCardBody>
-          {items}
-        </MDBCardBody>
-      </MDBCard>
+    <MDBCard>
+      <MDBCardImage />
+      <MDBCardBody>{items}</MDBCardBody>
+    </MDBCard>
   );
 }
-function clearCart(coffee) {
-  if (shoppingCart.has(coffee)) {
-    Map.shoppingCart.clear()
+
+function clearCart() {
+  shoppingCart.clear();
+  console.log(shoppingCart);
+}
+function calculateTotalPrice(shoppingCart) {
+  let totalPrice = 0;
+  for (let item of shoppingCart.entries()) {
+      totalPrice += item[1] * 5.99;
   }
-  console.log(shoppingCart)
+  return totalPrice.toFixed(2);
 }
 
 const FlexBox = styled(Box)`
@@ -55,15 +62,19 @@ const FlexBox = styled(Box)`
 `;
 
 const CartMenu = () => {
+  console.log(shoppingCart);
+  let totalPrice = 69;
+  useEffect(() => {
+    console.log("shoppingCart changed");
+    totalPrice = calculateTotalPrice(shoppingCart);
+  }, [shoppingCart]);
   const parentRef = useRef();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cart);
   const isCartOpen = useSelector((state) => state.cart.isCartOpen);
-  
-  const totalPrice = cart.reduce((total, item) => {
-    return total + item.count * item.attributes.price;
-  }, 0);
+
+  totalPrice = calculateTotalPrice(shoppingCart);
 
   return (
     <Box
@@ -129,7 +140,7 @@ const CartMenu = () => {
                 m: "20px 0",
               }}
               onClick={() => {
-               clearCart (shoppingCart) ;
+                clearCart(shoppingCart);
               }}
             >
               CLEAR CART
