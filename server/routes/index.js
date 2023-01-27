@@ -1,12 +1,18 @@
-const router = require('express').Router();
-const path = require('path');
-const apiRoutes = require('./api');
+const express = require('express');
+const connectDB = require('./config/db');
+const auth = require('./controllers/auth');
 
-router.use('/api', apiRoutes);
+const app = express();
 
-// serve up react front-end in production
-router.use((req, res) => {
-  res.sendFile(path.join(__dirname, '../../client/build/index.html'));
-});
+// Connect to the database
+connectDB();
 
-module.exports = router;
+app.use(express.json({ extended: false }));
+
+// Define routes
+app.post('/register', auth.createUser);
+app.post('/login', auth.checkLogin);
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
