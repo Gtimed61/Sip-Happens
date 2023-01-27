@@ -7,10 +7,10 @@ import { shades } from "../../theme";
 import Payment from "./Payment";
 import Shipping from "./Shipping";
 import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from '@stripe/react-stripe-js';
 
 const stripePromise = loadStripe(
-  "pk_test_51LgU7yConHioZHhlAcZdfDAnV9643a7N1CMpxlKtzI1AUWLsRyrord79GYzZQ6m8RzVnVQaHsgbvN1qSpiDegoPi006QkO0Mlc"
-);
+  "pk_test_51MTtYUCPpOQNxK9fdHCD8vMEYKDIPw7WdFiyRa37agXXNS3gBS9eOiDHfk5mIwMcWTccQQ5B1UfReSOhgoyXdBQw00UOwpoF7Z");
 
 const Checkout = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -44,10 +44,11 @@ const Checkout = () => {
       products: cart.map(({ id, count }) => ({
         id,
         count,
+          
       })),
     };
 
-    const response = await fetch("http://localhost:2000/api/orders", {
+    const response = await fetch("https://0cff-47-160-165-64.ngrok.io/checkout", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(requestBody),
